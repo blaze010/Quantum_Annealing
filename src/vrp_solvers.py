@@ -7,6 +7,8 @@ import networkx as nx
 import numpy as np
 from queue import Queue
 
+from qubo_gen import dwave_to_gurobi
+
 # Abstract class for VRP solvers.
 class VRPSolver:
     # Attributes : VRPProblem
@@ -26,9 +28,13 @@ class VRPSolver:
 
 # Solver solves VRP only by QUBO formulation.
 class FullQuboSolver(VRPSolver):
-    def solve(self, only_one_const, order_const, solver_type = 'cpu'):
+    def solve(self, only_one_const, order_const, test_name, solver_type = 'cpu'):
         qubo = self.problem.get_full_qubo(only_one_const, order_const)
-        sample = DWaveSolvers.solve_qubo(qubo, solver_type = solver_type)
+        
+        dicte = qubo.get_dict()
+        dwave_to_gurobi(dicte, test_name)
+        
+        #sample = DWaveSolvers.solve_qubo(qubo, solver_type = solver_type)
         solution = VRPSolution(self.problem, sample)
         return solution
 
@@ -110,7 +116,7 @@ class DBScanSolver(VRPSolver):
                     if states[v] == -2:
                         q.put(v)
 
-        for dest in dests: 
+        for dest in dests:
             if states[dest] == -1:
                 min_dist = self.max_dist
                 best_neighbour = -1
@@ -139,7 +145,7 @@ class DBScanSolver(VRPSolver):
     # costs - array with costs between dests.
     # min_radius, max_radius - lower and upper bound for radius parameter
     # in dbscan.
-    # clusters_num - expected maximum number of clusters. It is not guaranteed that 
+    # clusters_num - expected maximum number of clusters. It is not guaranteed that
     # function won't return more clusters.
     # max_len - maximum size of a cluster. It is guaranteed that every cluster will
     # have at most max_len elements.
@@ -166,7 +172,7 @@ class DBScanSolver(VRPSolver):
                 if len(clusters) < len(best_res):
                     best_res = clusters
 
-        # Recursive dbscan on clusters with too many elements. 
+        # Recursive dbscan on clusters with too many elements.
         for cluster in best_res:
             weight = 0
             for dest in cluster:
@@ -274,7 +280,7 @@ class DBScanSolver(VRPSolver):
 
         new_problem = VRPProblem(sources, new_costs, capacities, new_dests, new_weights)
         solver = DBScanSolver(new_problem)
-        compressed_solution = solver.solve(only_one_const, order_const, 
+        compressed_solution = solver.solve(only_one_const, order_const,
                             solver_type = solver_type).solution
 
         # Achieving full solution from solution of smaller version.
@@ -289,7 +295,7 @@ class DBScanSolver(VRPSolver):
 
 # Solver uses some solver to generate TSP Solution and tries to make VRP solution from it.
 # Attributes : solver - VRPSolver object. DBScanSolver is recomended.
-# random - number of permutations of vehicles that will be generate. 
+# random - number of permutations of vehicles that will be generate.
 class SolutionPartitioningSolver(VRPSolver):
 
     def __init__(self, problem, solver, random = 100):
@@ -297,7 +303,7 @@ class SolutionPartitioningSolver(VRPSolver):
         self.solver = solver
         self.random = random
         self.inf = 2 * sum(map(sum, problem.costs))
-    
+
     # Divides TSP solution to continous parts that will be correct VRP solution.
     def _divide_solution_greedy_dp(self, solution):
         problem = self.problem
@@ -346,12 +352,12 @@ class SolutionPartitioningSolver(VRPSolver):
             else:
                 new_solution.append([])
             pointer = prev
-        
+
         new_solution.reverse()
         return VRPSolution(problem, None, None, new_solution)
 
     # Creates random permutations of vehicles and using _divide_solution_greedy for
-    # each of them. 
+    # each of them.
     # random - number of permutations.
     def _divide_solution_random(self, solution):
         random = self.random

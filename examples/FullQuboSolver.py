@@ -18,16 +18,17 @@ if __name__ == '__main__':
     only_one_const = 10000000.
     order_const = 1.
 
-    for t in ['small_graph1', 'small_graph2']:
+    for t in ['small_graph1']:#, 'example2']:
         print("Test : ", t)
 
         # Reading problem from file.
         path = os.path.join(project_dir, 'tests/vrp/' + t + '.test')
-        problem = read_full_test(path, graph_path ,capacity = False)
+        problem = read_full_test(path, graph_path, capacity = False)
+        #problem = read_test(path, capacity = False)
 
         # Solving problem on FullQuboSolver.
         solver = FullQuboSolver(problem)
-        solution = solver.solve(only_one_const, order_const, solver_type = 'cpu')
+        solution = solver.solve(only_one_const, order_const, t, solver_type = 'cpu')
 
         # Checking if solution is correct.
         if solution == None or solution.check() == False:
