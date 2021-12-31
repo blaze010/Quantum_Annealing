@@ -1,0 +1,7 @@
+Test :  example2
+{'qpu_access_time': 34344, 'charge_time': 2995016, 'run_time': 2995016, 'problem_id': '83c621bd-a26b-4621-bee9-15a3801033da'}
+<bound method SampleSet.samples of SampleSet(rec.array([([0, 1], -19999998., 1)],
+          dtype=[('sample', '<i4', (2,)), ('energy', '<f8'), ('num_occurrences', '<i8')]), Variables([(0, 0), (0, 1)]), {'qpu_access_time': 34344, 'charge_time': 2995016, 'run_time': 2995016, 'problem_id': '83c621bd-a26b-4621-bee9-15a3801033da'}, 'BINARY')>
+Solution :  [[0, 1, 0]]
+Total cost :  2
+

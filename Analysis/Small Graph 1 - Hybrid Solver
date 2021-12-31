@@ -1,0 +1,26 @@
+Test :  small_graph1
+
+{'qpu_access_time': 35929, 'charge_time': 3537760, 'run_time': 3554451, 'problem_id': '393ad4a7-c1de-427c-a66c-f3f1b26cca6c'}
+
+Solution :  [[3, 24, 5, 18, 20, 10, 19, 3], [1, 8, 14, 7, 22, 6, 11, 9, 17, 0], [0, 13, 16, 12, 21, 15, 23, 0]]
+
+Total cost :  988
+
+
+Test :  small_graph1
+{'qpu_access_time': 0, 'charge_time': 3536016, 'run_time': 3536016, 'problem_id': '7f7668f4-d77d-4b0b-b58c-7ce4bb1ec221', 'problem_label': 'Small Graph 1 - Test 2'}
+Solution :  [[0, 10, 20, 14, 18, 15, 2], [0, 17, 7, 19, 16, 11, 5, 0], [0, 13, 23, 22, 24, 21, 6, 9, 12, 8, 0]]
+Total cost :  1008
+
+
+Test :  small_graph1
+{'qpu_access_time': 0, 'charge_time': 3525651, 'run_time': 3525651, 'problem_id': '08afeec8-8955-4961-9e69-18d44ce1153c'}
+Solution :  [[2, 9, 11, 5, 14, 8, 24, 7, 4], [3, 18, 13, 12, 16, 17, 19, 10, 23, 0], [3, 20, 21, 15, 6, 22, 3]]
+Total cost :  1060
+
+
+Test :  small_graph1
+{'qpu_access_time': 35924, 'charge_time': 3528095, 'run_time': 3528095, 'problem_id': '51c2690a-a63c-44bd-a401-e3a7ac4f74cd'}
+Solution :  [[2, 14, 8, 11, 20, 15, 10, 9, 4], [3, 18, 21, 5, 7, 17, 6, 19, 22, 3], [3, 24, 16, 23, 12, 13, 0]]
+Total cost :  943
+
